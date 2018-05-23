@@ -5,34 +5,34 @@ import com.google.gson.annotations.SerializedName;
 
 public class Pesan {
 
-    @SerializedName(":nama")
+    @SerializedName("nama")
     @Expose
     private String nama;
-    @SerializedName(":no_hp")
+    @SerializedName("no_hp")
     @Expose
     private String noHp;
-    @SerializedName(":email")
+    @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName(":latit")
+    @SerializedName("latit")
     @Expose
     private String latit;
-    @SerializedName(":longit")
+    @SerializedName("longit")
     @Expose
     private String longit;
-    @SerializedName(":nama_menu")
+    @SerializedName("nama_menu")
     @Expose
     private String namaMenu;
-    @SerializedName(":gambar")
+    @SerializedName("gambar")
     @Expose
     private String gambar;
-    @SerializedName(":jumlah")
+    @SerializedName("jumlah")
     @Expose
     private String jumlah;
-    @SerializedName(":total_harga")
+    @SerializedName("total_harga")
     @Expose
     private String totalHarga;
-    @SerializedName(":status")
+    @SerializedName("status")
     @Expose
     private String status;
 

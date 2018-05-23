@@ -20,15 +20,7 @@ import com.bumptech.glide.Glide;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
-import io.github.adamnain.gowarkop.adapter.MenuAdapter;
-import io.github.adamnain.gowarkop.api.BaseApiService;
-import io.github.adamnain.gowarkop.model.Pesan;
-import io.github.adamnain.gowarkop.model.ResponseMenu;
-import io.github.adamnain.gowarkop.model.ResponsePesan;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 
 public class DetailMenuActivity extends AppCompatActivity {
     AppBarLayout Appbar;
@@ -136,8 +128,8 @@ public class DetailMenuActivity extends AppCompatActivity {
 
         getLocation();
         Intent i = new Intent(getApplicationContext(), KonfirmasiPesananActivity.class);
-        i.putExtra("latitude", latitude);
-        i.putExtra("longitude", longitude);
+        i.putExtra("latitude", String.valueOf(latitude));
+        i.putExtra("longitude", String.valueOf(longitude));
         i.putExtra("namamenu", getIntent().getStringExtra("namamenu"));
         i.putExtra("gambar", gambar);
         i.putExtra("totalPesanan", String.valueOf(totalPesanan));

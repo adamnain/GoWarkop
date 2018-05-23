@@ -3,25 +3,14 @@ package io.github.adamnain.gowarkop.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponsePesan {
+public class ResponseLogin {
 
     @SerializedName("status")
     @Expose
     private String status;
     @SerializedName("data")
     @Expose
-    private Pesan pesan;
-
-
-    public ResponsePesan() {
-    }
-
-
-    public ResponsePesan(String status, Pesan pesan) {
-        super();
-        this.status = status;
-        this.pesan = pesan;
-    }
+    private Login login;
 
     public String getStatus() {
         return status;
@@ -31,12 +20,12 @@ public class ResponsePesan {
         this.status = status;
     }
 
-    public Pesan getPesan() {
-        return pesan;
+    public Login getLogin() {
+        return login;
     }
 
-    public void setData(Pesan pesan) {
-        this.pesan = pesan;
+    public void setData(Login login) {
+        this.login = login;
     }
 
 }

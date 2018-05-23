@@ -7,9 +7,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.adamnain.gowarkop.api.BaseApiService;
+import io.github.adamnain.gowarkop.api.UtilsApi;
 import io.github.adamnain.gowarkop.model.Pesan;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,6 +21,8 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
     //service
     BaseApiService apiService;
     ProgressDialog loading;
+    //session
+    SessionManager session;
 
     @BindView(R.id.tv_nama_menu_konfirmasi)
     TextView tvNamaMenu;
@@ -32,29 +37,43 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_konfirmasi_pesanan);
 
-        tvNamaMenu.setText("namamenu");
-        tvTotalPesanan.setText(getIntent().getStringExtra("totalPesanan"));
-        tvTotalHarga.setText(getIntent().getStringExtra("totalHarga"));
+        ButterKnife.bind(this);
+
+        apiService = UtilsApi.getAPIService();
+        session  = new SessionManager(getApplicationContext());
+
+
+        tvNamaMenu.setText(getIntent().getStringExtra("namamenu"));
+        tvTotalPesanan.setText("Total Pesanan: "+getIntent().getStringExtra("totalPesanan"));
+        tvTotalHarga.setText("Total Harga Rp."+getIntent().getStringExtra("totalHarga"));
     }
 
     @OnClick(R.id.btn_konfirmasi_pesanan)
     public void konfirmasiPesanan(){
-        String nama = "nama";
-        String noHp = "085724748508";
-        String email = "email@canggih.org";
+        String nama = session.getNamaPref();
+        String noHp = session.getHpPref();
+        String email = session.getEmailPref();
         String gambar = "https://upload.wikimedia.org/wikipedia/commons/6/64/Foods_%28cropped%29.jpg";
         String status = "0";
         postPesan(nama, noHp, email, getIntent().getStringExtra("latitude"), getIntent().getStringExtra("longitude"), getIntent().getStringExtra("namamenu"), gambar, getIntent().getStringExtra("totalPesanan"), getIntent().getStringExtra("totalHarga"), status);
 
     }
 
-    private void postPesan(String nama, String noHp, String email, String latit, String longit, String namaMenu, String gambar, String jumlah, String totalHarga, String status){
+    @OnClick(R.id.btn_deteksi_lokasi)
+    public void deteksiLokasi(){
+        DetailMenuActivity detail = new DetailMenuActivity();
+        detail.getLocation();
+    }
+
+    //service postPesanan
+    public void postPesan(String nama, String noHp, String email, String latit, String longit, String namaMenu, String gambar, String jumlah, String totalHarga, String status){
         loading = ProgressDialog.show(this, null, "Harap Tunggu...", true, false);
+
         Pesan pesan = new Pesan(nama, noHp, email, latit, longit, namaMenu, gambar, jumlah, totalHarga, status);
-        Call<Pesan> call = apiService.pesan(pesan,"123");
-        call.enqueue(new Callback<Pesan>() {
+        Call<ResponseBody> call = apiService.postPesan( pesan,"123");
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<Pesan> call, Response<Pesan> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()){
                     loading.dismiss();
                     Toast.makeText(getApplicationContext(), "Sukses Kirim Pesanan Silahkan Lihat Pesanan!", Toast.LENGTH_SHORT).show();
@@ -66,7 +85,7 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Pesan> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 loading.dismiss();
                 Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
             }
