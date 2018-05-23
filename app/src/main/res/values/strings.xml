@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">GoWarkop</string>
+    <string name="daftar_menu">Daftar Menu</string>
+    <string name="contact">Contact</string>
+    <string name="profile">Profile</string>
+    <string name="pesan">pesan</string>
+    <string name="konfirmasi_pesanan">konfirmasi pesanan</string>
+</resources>
