@@ -1,6 +1,9 @@
 package io.github.adamnain.gowarkop;
 
 import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -23,6 +26,10 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
     ProgressDialog loading;
     //session
     SessionManager session;
+
+    private GpsTracker gpsTracker;
+    double latitude, longitude;
+
 
     @BindView(R.id.tv_nama_menu_konfirmasi)
     TextView tvNamaMenu;
@@ -55,14 +62,27 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
         String email = session.getEmailPref();
         String gambar = "https://upload.wikimedia.org/wikipedia/commons/6/64/Foods_%28cropped%29.jpg";
         String status = "0";
-        postPesan(nama, noHp, email, getIntent().getStringExtra("latitude"), getIntent().getStringExtra("longitude"), getIntent().getStringExtra("namamenu"), gambar, getIntent().getStringExtra("totalPesanan"), getIntent().getStringExtra("totalHarga"), status);
+        postPesan(nama, noHp, email, String.valueOf(latitude), String.valueOf(longitude), getIntent().getStringExtra("namamenu"), gambar, getIntent().getStringExtra("totalPesanan"), getIntent().getStringExtra("totalHarga"), status);
 
     }
 
     @OnClick(R.id.btn_deteksi_lokasi)
-    public void deteksiLokasi(){
-        DetailMenuActivity detail = new DetailMenuActivity();
-        detail.getLocation();
+    public void getLocation(){
+        try {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        gpsTracker = new GpsTracker(getApplicationContext());
+        if(gpsTracker.canGetLocation()){
+            latitude = gpsTracker.getLatitude();
+            longitude = gpsTracker.getLongitude();
+            Toast.makeText(getApplicationContext(), String.valueOf(latitude), Toast.LENGTH_SHORT).show();
+        }else{
+            gpsTracker.showSettingsAlert();
+        }
     }
 
     //service postPesanan
