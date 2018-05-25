@@ -59,7 +59,6 @@ public class DetailMenuActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getLocation();
 
 
         totalHarga = 0;
@@ -74,6 +73,7 @@ public class DetailMenuActivity extends AppCompatActivity {
         tvNamaMenu.setText(getIntent().getStringExtra("namamenu"));
         tvHarga.setText("Rp"+getIntent().getStringExtra("harga"));
         tvDeskripsi.setText("Lorem Ipsum");
+        tvTotalHarga.setText(""+totalHarga);
 
         Appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -118,70 +118,24 @@ public class DetailMenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_pesan)
     public void pesan(){
-        //post pesan
-//        String nama = "nama";
-//        String noHp = "085724748508";
-//        String email = "email@canggih.org";
         String gambar = "https://upload.wikimedia.org/wikipedia/commons/6/64/Foods_%28cropped%29.jpg";
-//        String status = "0"
-//        postPesan(nama, noHp, email, latitude, longitude, getIntent().getStringExtra("namamenu"), gambar, totalPesanan, totalHarga, status);
 
-        getLocation();
-        Intent i = new Intent(getApplicationContext(), KonfirmasiPesananActivity.class);
-        i.putExtra("latitude", String.valueOf(latitude));
-        i.putExtra("longitude", String.valueOf(longitude));
-        i.putExtra("namamenu", getIntent().getStringExtra("namamenu"));
-        i.putExtra("gambar", gambar);
-        i.putExtra("totalPesanan", String.valueOf(totalPesanan));
-        i.putExtra("totalHarga", String.valueOf(totalHarga));
-        startActivity(i);
-    }
-
-
-    public void getLocation(){
-        try {
-            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
-            }
-        } catch (Exception e){
-            e.printStackTrace();
+        if (totalPesanan == 0){
+            Toast.makeText(getApplicationContext(), "Harap Masukan Jumlah Pesanan", Toast.LENGTH_SHORT).show();
         }
-        gpsTracker = new GpsTracker(getApplicationContext());
-        if(gpsTracker.canGetLocation()){
-            latitude = gpsTracker.getLatitude();
-            longitude = gpsTracker.getLongitude();
-            Toast.makeText(getApplicationContext(), String.valueOf(latitude), Toast.LENGTH_SHORT).show();
-        }else{
-            gpsTracker.showSettingsAlert();
+        else{
+            Intent i = new Intent(getApplicationContext(), KonfirmasiPesananActivity.class);
+            i.putExtra("latitude", String.valueOf(latitude));
+            i.putExtra("longitude", String.valueOf(longitude));
+            i.putExtra("namamenu", getIntent().getStringExtra("namamenu"));
+            i.putExtra("gambar", gambar);
+            i.putExtra("totalPesanan", String.valueOf(totalPesanan));
+            i.putExtra("totalHarga", String.valueOf(totalHarga));
+            startActivity(i);
         }
+        //getLocation();
+
     }
-
-
-//    private void postPesan(nama, noHp, email, latit, longit, namaMenu, gambar, jumlah, totalHarga, status){
-//        loading = ProgressDialog.show(this, null, "Harap Tunggu...", true, false);
-//        Pesan pesan = new Pesan(nama, noHp, email, latit, longit, namaMenu, gambar, jumlah, totalHarga, status);
-//        Call<Pesan> call = apiService.pesan(pesan,"123");
-//        call.enqueue(new Callback<Pesan>() {
-//            @Override
-//            public void onResponse(Call<Pesan> call, Response<Pesan> response) {
-//                if (response.isSuccessful()){
-//                    loading.dismiss();
-//                    Toast.makeText(getApplicationContext(), "Sukses Kirim Pesanan Silahkan Lihat Pesanan!", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    loading.dismiss();
-//                    Toast.makeText(getApplicationContext(), "Failed fletch data", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Pesan> call, Throwable t) {
-//                loading.dismiss();
-//                Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-
 
     @Override
     public void onBackPressed() {

@@ -6,6 +6,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
 
     private GpsTracker gpsTracker;
     double latitude, longitude;
+    int statusLokasi;
 
 
     @BindView(R.id.tv_nama_menu_konfirmasi)
@@ -53,6 +55,16 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
         tvNamaMenu.setText(getIntent().getStringExtra("namamenu"));
         tvTotalPesanan.setText("Total Pesanan: "+getIntent().getStringExtra("totalPesanan"));
         tvTotalHarga.setText("Total Harga Rp."+getIntent().getStringExtra("totalHarga"));
+
+        //cek gps
+        statusLokasi = 0;
+        try {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @OnClick(R.id.btn_konfirmasi_pesanan)
@@ -62,20 +74,20 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
         String email = session.getEmailPref();
         String gambar = "https://upload.wikimedia.org/wikipedia/commons/6/64/Foods_%28cropped%29.jpg";
         String status = "0";
-        postPesan(nama, noHp, email, String.valueOf(latitude), String.valueOf(longitude), getIntent().getStringExtra("namamenu"), gambar, getIntent().getStringExtra("totalPesanan"), getIntent().getStringExtra("totalHarga"), status);
+        if (statusLokasi == 0){
+            Toast.makeText(this, "Harap Deteksi Lokasi Anda!", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            postPesan(nama, noHp, email, String.valueOf(latitude), String.valueOf(longitude), getIntent().getStringExtra("namamenu"), gambar, getIntent().getStringExtra("totalPesanan"), getIntent().getStringExtra("totalHarga"), status);
+        }
+
 
     }
 
     @OnClick(R.id.btn_deteksi_lokasi)
     public void getLocation(){
-        try {
-            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        gpsTracker = new GpsTracker(getApplicationContext());
+        statusLokasi = statusLokasi+1;
+        gpsTracker = new GpsTracker(KonfirmasiPesananActivity.this);
         if(gpsTracker.canGetLocation()){
             latitude = gpsTracker.getLatitude();
             longitude = gpsTracker.getLongitude();
