@@ -20,6 +20,9 @@ public class Menu {
     @SerializedName("gambar")
     @Expose
     private String gambar;
+    @SerializedName("deskripsi")
+    @Expose
+    private String deskripsi;
 
     /**
      * No args constructor for use in serialization
@@ -36,13 +39,14 @@ public class Menu {
      * @param nama
      * @param harga
      */
-    public Menu(String id, String nama, String harga, String kategori, String gambar) {
+    public Menu(String id, String nama, String harga, String kategori, String gambar, String deskripsi) {
         super();
         this.id = id;
         this.nama = nama;
         this.harga = harga;
         this.kategori = kategori;
         this.gambar = gambar;
+        this.deskripsi = deskripsi;
     }
 
     public String getId() {
@@ -81,8 +85,15 @@ public class Menu {
         return gambar;
     }
 
-    public void setGambar(String gambar) {
+    public void setGambar(String deskripsi) {
         this.gambar = gambar;
+    }
+    public String getDeskripsi() {
+        return deskripsi;
+    }
+
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
     }
 
 }

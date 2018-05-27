@@ -45,7 +45,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         final Menu mCurrent = listMenu.get(position);
 
         Glide.with(context)
-                .load("https://upload.wikimedia.org/wikipedia/commons/6/64/Foods_%28cropped%29.jpg")
+                .load(mCurrent.getGambar())
                 .into(holder.imgMenu);
 
         holder.tvNamaMenu.setText(mCurrent.getNama());
@@ -87,6 +87,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
             Intent i = new Intent(context, DetailMenuActivity.class);
             i.putExtra("namamenu", element.getNama());
             i.putExtra("harga", element.getHarga());
+            i.putExtra("gambar", element.getGambar());
+            i.putExtra("deskripsi", element.getDeskripsi());
             context.startActivity(i);
             mAdapter.notifyDataSetChanged();
 

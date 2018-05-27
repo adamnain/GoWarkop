@@ -67,12 +67,12 @@ public class DetailMenuActivity extends AppCompatActivity {
 
 
         Glide.with(getApplicationContext())
-                .load("https://upload.wikimedia.org/wikipedia/commons/6/64/Foods_%28cropped%29.jpg")
+                .load(getIntent().getStringExtra("gambar"))
                 .into(imgMenu);
 
         tvNamaMenu.setText(getIntent().getStringExtra("namamenu"));
         tvHarga.setText("Rp"+getIntent().getStringExtra("harga"));
-        tvDeskripsi.setText("Lorem Ipsum");
+        tvDeskripsi.setText(getIntent().getStringExtra("deskripsi"));
         tvTotalHarga.setText(""+totalHarga);
 
         Appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -118,8 +118,6 @@ public class DetailMenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_pesan)
     public void pesan(){
-        String gambar = "https://upload.wikimedia.org/wikipedia/commons/6/64/Foods_%28cropped%29.jpg";
-
         if (totalPesanan == 0){
             Toast.makeText(getApplicationContext(), "Harap Masukan Jumlah Pesanan", Toast.LENGTH_SHORT).show();
         }
@@ -128,7 +126,7 @@ public class DetailMenuActivity extends AppCompatActivity {
             i.putExtra("latitude", String.valueOf(latitude));
             i.putExtra("longitude", String.valueOf(longitude));
             i.putExtra("namamenu", getIntent().getStringExtra("namamenu"));
-            i.putExtra("gambar", gambar);
+            i.putExtra("gambar", getIntent().getStringExtra("gambar"));
             i.putExtra("totalPesanan", String.valueOf(totalPesanan));
             i.putExtra("totalHarga", String.valueOf(totalHarga));
             startActivity(i);

@@ -2,7 +2,7 @@ package io.github.adamnain.gowarkop.api;
 
 public class UtilsApi {
 
-    public static final String BASE_URL_API = "http://adamnain.000webhostapp.com/apigowarkop/public/";
+    public static final String BASE_URL_API = "https://gowarkop.herokuapp.com/public/";
 
     // Mendeklarasikan Interface BaseApiService
     public static BaseApiService getAPIService(){

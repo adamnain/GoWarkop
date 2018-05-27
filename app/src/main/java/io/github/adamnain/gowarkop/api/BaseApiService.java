@@ -4,6 +4,7 @@ import io.github.adamnain.gowarkop.model.Login;
 import io.github.adamnain.gowarkop.model.Pesan;
 import io.github.adamnain.gowarkop.model.ResponseLogin;
 import io.github.adamnain.gowarkop.model.ResponseMenu;
+import io.github.adamnain.gowarkop.model.ResponsePesan;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -16,7 +17,6 @@ import retrofit2.http.Query;
 
 public interface BaseApiService {
 
-    //list semua bangunan berdasarkan provinsi
     @GET("allmenu/")
     Call<ResponseMenu> getAllMenu(@Query("key") String key);
 
@@ -26,6 +26,17 @@ public interface BaseApiService {
     @FormUrlEncoded
     @POST("login/")
     Call<ResponseLogin> login(@Field("email") String email, @Field("password") String password, @Query("key") String key);
+
+    @FormUrlEncoded
+    @POST("register/")
+    Call<ResponseBody> register(@Field("nama") String nama, @Field("alamat") String alamat,
+                                @Field("no_hp") String no_hp, @Field("email") String email,
+                                @Field("password") String password, @Field("api_key") String api_key,
+                                @Field("hit") String hit, @Query("key") String key);
+
+    @GET("pesan/lihat/{email}")
+    Call<ResponsePesan> getMyPesanan(@Path("email") String email, @Query("key")String key);
+
 
 
 }

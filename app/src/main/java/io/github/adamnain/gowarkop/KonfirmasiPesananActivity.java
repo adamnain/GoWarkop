@@ -1,14 +1,18 @@
 package io.github.adamnain.gowarkop;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +43,8 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
     TextView tvTotalHarga;
     @BindView(R.id.tv_jumlah_pesanan_konfirmasi)
     TextView tvTotalPesanan;
+    @BindView(R.id.img_menu_konfirmasi)
+    ImageView imgMenu;
 
 
     @Override
@@ -55,6 +61,9 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
         tvNamaMenu.setText(getIntent().getStringExtra("namamenu"));
         tvTotalPesanan.setText("Total Pesanan: "+getIntent().getStringExtra("totalPesanan"));
         tvTotalHarga.setText("Total Harga Rp."+getIntent().getStringExtra("totalHarga"));
+        Glide.with(getApplicationContext())
+                .load(getIntent().getStringExtra("gambar"))
+                .into(imgMenu);
 
         //cek gps
         statusLokasi = 0;
@@ -72,7 +81,7 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
         String nama = session.getNamaPref();
         String noHp = session.getHpPref();
         String email = session.getEmailPref();
-        String gambar = "https://upload.wikimedia.org/wikipedia/commons/6/64/Foods_%28cropped%29.jpg";
+        String gambar = getIntent().getStringExtra("gambar");
         String status = "0";
         if (statusLokasi == 0){
             Toast.makeText(this, "Harap Deteksi Lokasi Anda!", Toast.LENGTH_SHORT).show();
@@ -109,6 +118,8 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     loading.dismiss();
                     Toast.makeText(getApplicationContext(), "Sukses Kirim Pesanan Silahkan Lihat Pesanan!", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
+                    startActivity(i);
                 }
                 else {
                     loading.dismiss();

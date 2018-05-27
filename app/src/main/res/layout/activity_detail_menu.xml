@@ -82,7 +82,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="2dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/colorPrimaryDark" />
@@ -102,8 +102,8 @@
                 <Button
                     android:id="@+id/btn_min_pesanan"
                     android:background="@drawable/button_brown"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
                     android:text="-"
                     android:textSize="21sp" />
 
@@ -119,17 +119,17 @@
                 <Button
                     android:id="@+id/btn_plus_detail"
                     android:background="@drawable/button_brown"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
                     android:text="+"
                     android:textSize="21sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@color/colorPrimaryDark" />
 
             <TextView

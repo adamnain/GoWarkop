@@ -16,6 +16,8 @@
             android:orientation="horizontal"
             android:layout_height="match_parent">
             <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/img_menu_konfirmasi"
                 android:src="@drawable/ic_spaguetti"
                 android:layout_width="100dp"
                 android:layout_height="100dp" />

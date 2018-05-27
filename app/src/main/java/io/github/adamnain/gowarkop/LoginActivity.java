@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
         apiService = UtilsApi.getAPIService();
         session  = new SessionManager(getApplicationContext());
+        session.checkLoginPage();
 
 
     }
@@ -63,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                     Login login = response.body().getLogin();
                     session.createData(login.getNama(), login.getEmail(), login.getNoHp());
 
-                    Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);
                     Toast.makeText(getApplicationContext(), "Sukses Login", Toast.LENGTH_SHORT).show();
                 }
@@ -80,6 +81,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+    @OnClick(R.id.tv_register)
+    public void register(){
+        Intent i = new Intent (LoginActivity.this,RegisterActivity.class);
+        startActivity(i);
+    }
+
 
     private void setLogin(){
 

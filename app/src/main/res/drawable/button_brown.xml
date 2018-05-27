@@ -4,7 +4,7 @@
     <!-- pressed -->
     <item android:state_pressed="true">
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <solid android:color="@color/colorWhite"/>
+            <solid android:color="@color/colorAccent"/>
             <stroke
                 android:width="2dip"
                 android:color="@color/colorPrimary" />
@@ -18,7 +18,7 @@
             <solid android:color="@color/colorWhite"/>
             <stroke
                 android:width="2dip"
-                android:color="@color/colorPrimary" />
+                android:color="@color/colorAccent" />
             <padding android:left="0dip" android:top="0dip" android:right="0dip" android:bottom="0dip" />
         </shape>
     </item>

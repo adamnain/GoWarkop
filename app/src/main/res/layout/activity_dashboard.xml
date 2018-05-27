@@ -101,7 +101,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@string/contact"
+                        android:text="@string/status_pesanan"
                         android:textSize="@dimen/textSize_menu_main" />
 
                 </LinearLayout>

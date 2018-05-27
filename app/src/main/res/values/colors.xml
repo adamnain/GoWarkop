@@ -9,6 +9,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorDivider">#BDBDBD</color>
     <color name="colorGreen">#66BB6A</color>
+    <color name="colorBlue">#3169a1</color>
     <color name="colorRedButton">#EF5350</color>
     <color name="blackOpacity">#90000000</color>
 </resources>
