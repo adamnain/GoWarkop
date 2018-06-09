@@ -20,6 +20,9 @@ public interface BaseApiService {
     @GET("allmenu/")
     Call<ResponseMenu> getAllMenu(@Query("key") String key);
 
+    @GET("menu/search")
+    Call<ResponseMenu> getSearchMenu(@Query("keyword") String keyword, @Query("key") String key);
+
     @POST("pesan/")
     Call<ResponseBody> postPesan(@Body Pesan pesan, @Query("key") String key);
 

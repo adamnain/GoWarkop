@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -73,6 +75,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(this);
         return true;
     }
 
@@ -117,6 +122,11 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         } else if (id == R.id.nav_profil) {
+            ProfilFragment newFragment = new ProfilFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.content_frame, newFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
 
         } else if (id == R.id.nav_share) {
 
@@ -207,9 +217,22 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
+    @OnClick(R.id.cv_profil_menu)
+    public void showProfil(){
+        ProfilFragment newFragment = new ProfilFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
     @Override
     public boolean onQueryTextSubmit(String query) {
-        return false;
+        Intent i = new Intent(getApplication(), ListMenuActivity.class);
+        i.putExtra("keyword", query);
+        startActivity(i);
+        Toast.makeText(getApplicationContext(), query, Toast.LENGTH_SHORT).show();
+        return true;
     }
 
     @Override

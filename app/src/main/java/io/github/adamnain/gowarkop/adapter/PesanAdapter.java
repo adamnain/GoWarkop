@@ -54,7 +54,7 @@ public class PesanAdapter extends RecyclerView.Adapter<PesanAdapter.ViewHolder> 
             holder.tvStatusPemesanan.setText("Belum Diproses");
         }
         else if (mCurrent.getStatus().equals("1")){
-            holder.tvStatusPemesanan.setText("Sedang Diantarkan");
+            holder.tvStatusPemesanan.setText("Pesanan Diantarkan");
         }
         else if (mCurrent.getStatus().equals("2")){
             holder.tvStatusPemesanan.setText("Pesanan Ditolak");

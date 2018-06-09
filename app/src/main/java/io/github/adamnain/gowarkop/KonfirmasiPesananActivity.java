@@ -57,7 +57,6 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
         apiService = UtilsApi.getAPIService();
         session  = new SessionManager(getApplicationContext());
 
-
         tvNamaMenu.setText(getIntent().getStringExtra("namamenu"));
         tvTotalPesanan.setText("Total Pesanan: "+getIntent().getStringExtra("totalPesanan"));
         tvTotalHarga.setText("Total Harga Rp."+getIntent().getStringExtra("totalHarga"));
@@ -97,10 +96,17 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
     public void getLocation(){
         statusLokasi = statusLokasi+1;
         gpsTracker = new GpsTracker(KonfirmasiPesananActivity.this);
+
+
         if(gpsTracker.canGetLocation()){
             latitude = gpsTracker.getLatitude();
             longitude = gpsTracker.getLongitude();
-            Toast.makeText(getApplicationContext(), String.valueOf(latitude), Toast.LENGTH_SHORT).show();
+            if (latitude == 0.0){
+                Toast.makeText(getApplicationContext(), "Harap ketuk 2x Untuk Mendeteksi Lokasi", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Lokasi Anda Telah Terdeteksi", Toast.LENGTH_SHORT).show();
+            }
         }else{
             gpsTracker.showSettingsAlert();
         }
@@ -118,7 +124,7 @@ public class KonfirmasiPesananActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     loading.dismiss();
                     Toast.makeText(getApplicationContext(), "Sukses Kirim Pesanan Silahkan Lihat Pesanan!", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
                 }
                 else {
